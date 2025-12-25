@@ -1,48 +1,65 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>College Exam Seat Optimizer</title>
+    <title>Exam Seat Optimizer</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .hero{
+            padding:70px 20px;
+            text-align:center;
+        }
+        .hero h1{
+            font-size:36px;
+            color:#7f1d1d;
+        }
+        .hero p{
+            max-width:700px;
+            margin:20px auto;
+            line-height:1.7;
+        }
+
+        .section{
+            background:white;
+            margin:40px auto;
+            padding:40px;
+            width:85%;
+            border-radius:14px;
+        }
+    </style>
 </head>
-<body style="background:#0f172a;font-family:Segoe UI,Arial,sans-serif;color:#e2e8f0;">
+<body>
 
-<div style="width:80%;margin:40px auto;">
+<div class="header"> Exam Seat Optimizer</div>
 
-    <h2>🎓 College Exam Seat Arrangement Panel</h2>
-    <p>Manage student records, rooms, and generate seating plans.</p>
-    <hr style="border-color:#6366f1">
-
-    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:25px;margin-top:30px;">
-
-        <div style="background:#1e293b;padding:25px;border-radius:12px;">
-            <h3>👨‍🎓 Student Management</h3>
-            <p>Add and manage student details.</p>
-            <a href="/ExamSeatOptimizer/student" style="color:#a78bfa;">Open</a>
-        </div>
-
-        <div style="background:#1e293b;padding:25px;border-radius:12px;">
-            <h3>🏫 Room Management</h3>
-            <p>Add rooms and define capacity.</p>
-            <a href="/ExamSeatOptimizer/room" style="color:#a78bfa;">Open</a>
-        </div>
-
-        <div style="background:#1e293b;padding:25px;border-radius:12px;">
-            <h3>🧠 Generate Seating Plan</h3>
-            <p>Create seating arrangement for exams.</p>
-            <a href="/ExamSeatOptimizer/allocate" style="color:#a78bfa;">Generate</a>
-        </div>
-
-        <div style="background:#1e293b;padding:25px;border-radius:12px;">
-            <h3>📄 View Seating Chart</h3>
-            <p>View final allocated seats.</p>
-            <a href="/ExamSeatOptimizer/view" style="color:#a78bfa;">View</a>
-        </div>
-
-    </div>
-
-    <p style="margin-top:40px;">
-        <a href="/ExamSeatOptimizer/logout" style="color:#f87171;">Logout</a>
+<div class="hero">
+    <h1>Smart Classroom Seating Automation</h1>
+    <p>
+        Exam Seat Optimizer is an intelligent web-based system designed to automate
+        classroom seating for college examinations. It avoids department-wise clustering
+        and ensures fair, conflict-free seating using graph coloring algorithms.
     </p>
 
+    <a href="login"><button style="width:160px;margin:10px">Login</button></a>
+    <a href="signup"><button style="width:160px;margin:10px">Signup</button></a>
+</div>
+
+<div class="section">
+    <h2> Features</h2>
+    <ul>
+        <li>Automatic student seat allocation</li>
+        <li>Prevents same department students from sitting together</li>
+        <li>8×3 real classroom bench visualization</li>
+        <li>Graph Coloring based conflict-free algorithm</li>
+    </ul>
+</div>
+
+<div class="section">
+    <h2> How It Works</h2>
+    <p>
+        Admin adds students and rooms.
+        System builds a conflict graph based on departments and assigns seats such that no
+        two students of the same department are placed side by side or one behind another.
+    </p>
 </div>
 
 </body>

@@ -1,57 +1,30 @@
-<form action="signup" method="post" style="
-    width:320px;
-    margin:80px auto;
-    padding:25px;
-    background:#1e293b;
-    border-radius:10px;
-    box-shadow:0 10px 25px rgba(0,0,0,.4);
-    text-align:center;
-    font-family:Segoe UI,Arial,sans-serif;
-">
-    <h2 style="color:#e2e8f0;margin-bottom:20px;">Create Account</h2>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Account</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
 
-    <input name="name" placeholder="Full Name" style="
-        width:90%;
-        padding:10px;
-        margin:10px 0;
-        border-radius:6px;
-        border:none;
-        outline:none;
-    "><br>
+<div class="header">Exam Seat Optimizer – Admin Registration</div>
 
-    <input name="email" placeholder="Email Address" style="
-        width:90%;
-        padding:10px;
-        margin:10px 0;
-        border-radius:6px;
-        border:none;
-        outline:none;
-    "><br>
+<div class="card">
+    <h2>Create Account</h2>
 
-    <input name="password" type="password" placeholder="Password" style="
-        width:90%;
-        padding:10px;
-        margin:10px 0;
-        border-radius:6px;
-        border:none;
-        outline:none;
-    "><br>
+    <form action="signup" method="post">
 
-    <button style="
-        width:95%;
-        padding:10px;
-        margin-top:15px;
-        border:none;
-        border-radius:6px;
-        background:#6366f1;
-        color:white;
-        font-size:15px;
-        font-weight:bold;
-        cursor:pointer;
-    ">Signup</button>
+        <input name="name" placeholder="Full Name" required>
+        <input name="email" type="email" placeholder="Email Address" required>
+        <input name="password" type="password" placeholder="Password" required>
 
-    <p style="margin-top:15px;color:#94a3b8;">
-        Already have account?
-        <a href="/ExamSeatOptimizer/login" style="color:#a78bfa;text-decoration:none;">Login</a>
-    </p>
-</form>
+        <button>Signup</button>
+
+        <p style="margin-top:15px;text-align:center">
+            Already have account? <a href="login">Login</a>
+        </p>
+
+    </form>
+</div>
+
+</body>
+</html>

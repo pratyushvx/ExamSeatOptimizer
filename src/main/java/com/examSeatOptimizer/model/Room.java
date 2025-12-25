@@ -1,7 +1,14 @@
 package com.examSeatOptimizer.model;
+
 public class Room {
-    private String roomNo; private int capacity;
-    public Room(String r,int c){roomNo=r;capacity=c;}
-    public String getRoomNo(){return roomNo;}
-    public int getCapacity(){return capacity;}
+    private String roomNo;
+    private int capacity;
+
+    public Room(String r){
+        roomNo = r;
+        capacity = 24;   // fixed classroom size (8 rows × 3 benches)
+    }
+
+    public String getRoomNo(){ return roomNo; }
+    public int getCapacity(){ return capacity; }
 }

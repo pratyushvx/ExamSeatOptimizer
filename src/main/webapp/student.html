@@ -1,9 +1,41 @@
-<h2>Add Student</h2>
-<form action="/ExamSeatOptimizer/student" method="post">
-  Name: <input name="name"><br>
-  Roll No: <input name="rollno"><br>
-  Dept: <input name="department"><br>
-  <button>Add Student</button>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Add Student</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
 
-</form>
-<a href="/ExamSeatOptimizer/index.jsp">Back</a>
+<div class="header">Exam Seat Optimizer – Student Entry</div>
+
+<div class="card">
+  <h2>Add Student</h2>
+
+  <form action="student" method="post">
+
+    <label>Student Name</label>
+    <input name="name" placeholder="Enter full name" required>
+
+    <label>Roll Number</label>
+    <input name="rollno" type="number" placeholder="Enter roll no" required>
+
+    <label>Department</label>
+    <select name="department" required>
+      <option value="">Select Department</option>
+      <option>CSE</option>
+      <option>IT</option>
+      <option>ME</option>
+      <option>ECE</option>
+    </select>
+
+    <button>Add Student</button>
+
+    <p style="margin-top:15px;text-align:center">
+      <a href="index.jsp">⬅ Back to Dashboard</a>
+    </p>
+
+  </form>
+</div>
+
+</body>
+</html>

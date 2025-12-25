@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Exam Seating Chart</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="header">Exam Seat Optimizer – Seating Layout</div>
+
+<div class="dashboard">
+    <div id="room"></div>
+</div>
+
+<script>
+    fetch("view",{method:"POST"})
+        .then(r=>r.json())
+        .then(data=>{
+            let html="";
+            data.forEach(room=>{
+                html+=`<div class='room'><h3>Room ${room.room}</h3>`;
+                for(let i=0;i<24;i+=3){
+                    html+=`<div class='row'>`;
+                    for(let j=0;j<3;j++){
+                        let s=room.seats[i+j];
+                        html+=`<div class='bench'>
+                  <span class='no'>${i+j+1}</span>
+                  <b>${s.roll}</b><br>${s.dept}
+                </div>`;
+                    }
+                    html+=`</div>`;
+                }
+                html+=`</div>`;
+            });
+            document.getElementById("room").innerHTML=html;
+        });
+</script>
+
+</body>
+</html>

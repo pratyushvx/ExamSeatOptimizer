@@ -26,7 +26,7 @@ public class LoginServlet extends HttpServlet {
         );
 
         if(a!=null)
-            s.sendRedirect("index.jsp");
+            s.sendRedirect("start.html");
         else
             s.sendRedirect("login");
     }

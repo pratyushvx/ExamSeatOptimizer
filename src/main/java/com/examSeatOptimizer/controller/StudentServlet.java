@@ -20,6 +20,6 @@ public class StudentServlet extends HttpServlet {
                 r.getParameter("department")
         );
         new StudentDAO().save(st);
-        s.sendRedirect("index.jsp");
+        s.sendRedirect("start.html");
     }
 }

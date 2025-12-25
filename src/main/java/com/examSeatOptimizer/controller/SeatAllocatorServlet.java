@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.*;
 import com.examSeatOptimizer.dao.DBConnection;
+import com.examSeatOptimizer.algorithm.GraphColoringAllocator;
 
 @WebServlet("/allocate")
 public class SeatAllocatorServlet extends HttpServlet {
@@ -13,58 +14,45 @@ public class SeatAllocatorServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req,HttpServletResponse res)
             throws IOException {
 
-        try {
+        try{
             Connection con = DBConnection.getConnection();
             con.prepareStatement("DELETE FROM allocation").executeUpdate();
 
-            // Step 1: Fetch students
-            PreparedStatement ps =
-                    con.prepareStatement("SELECT id,department FROM student");
-            ResultSet rs = ps.executeQuery();
+            ResultSet rs = con.createStatement()
+                    .executeQuery("SELECT id,department FROM student ORDER BY department");
 
-            // Step 2: Group by department
-            Map<String, Queue<Integer>> map = new LinkedHashMap<>();
+            Map<String, Queue<Integer>> base = new LinkedHashMap<>();
             while(rs.next()){
-                String dept = rs.getString("department");
-                int id = rs.getInt("id");
-                map.putIfAbsent(dept, new LinkedList<>());
-                map.get(dept).add(id);
+                base.putIfAbsent(rs.getString(2), new LinkedList<>());
+                base.get(rs.getString(2)).add(rs.getInt(1));
             }
 
-            // Step 3: Fetch rooms
-            PreparedStatement psRoom =
-                    con.prepareStatement("SELECT id,capacity FROM room");
-            ResultSet rooms = psRoom.executeQuery();
+            ResultSet rooms = con.createStatement().executeQuery("SELECT id FROM room");
+            PreparedStatement ps = con.prepareStatement(
+                    "INSERT INTO allocation(student_id,room_id,seat_no) VALUES(?,?,?)");
 
-            PreparedStatement insert =
-                    con.prepareStatement(
-                            "INSERT INTO allocation(student_id,room_id,seat_no) VALUES(?,?,?)");
+            GraphColoringAllocator algo = new GraphColoringAllocator();
 
-            // Step 4: Round-robin allocation
             while(rooms.next()){
-                int roomId = rooms.getInt("id");
-                int cap = rooms.getInt("capacity");
-                int seat = 1;
+                int rid = rooms.getInt(1);
 
-                while(seat <= cap && !map.isEmpty()){
-                    Iterator<Map.Entry<String,Queue<Integer>>> it = map.entrySet().iterator();
-                    while(it.hasNext() && seat <= cap){
-                        Queue<Integer> q = it.next().getValue();
-                        if(q.isEmpty()){
-                            it.remove();
-                            continue;
-                        }
-                        int sid = q.poll();
-                        insert.setInt(1,sid);
-                        insert.setInt(2,roomId);
-                        insert.setInt(3,seat++);
-                        insert.executeUpdate();
+                Map<String,Queue<Integer>> map = new LinkedHashMap<>();
+                base.forEach((k,v)->map.put(k,new LinkedList<>(v)));
+
+                int[][] grid = algo.generateLayout(map);
+                int seat=1;
+
+                for(int r=0;r<8;r++)
+                    for(int c=0;c<3;c++){
+                        ps.setInt(1,grid[r][c]);
+                        ps.setInt(2,rid);
+                        ps.setInt(3,seat++);
+                        ps.executeUpdate();
                     }
-                }
             }
-        } catch(Exception e){
-            e.printStackTrace();
-        }
 
+        }catch(Exception e){e.printStackTrace();}
+
+        res.sendRedirect("view");
     }
 }

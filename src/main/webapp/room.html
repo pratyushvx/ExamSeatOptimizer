@@ -1,7 +1,29 @@
-<h2>Add Exam Room</h2>
-<form action="/ExamSeatOptimizer/room" method="post">
-  Room No: <input name="room_no"><br>
-  Capacity: <input name="capacity"><br>
-  <button>Add Room</button>
-</form>
-<a href="/ExamSeatOptimizer/index.html">Back</a>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Add Exam Rooms</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="header">Exam Seat Optimizer – Room Setup</div>
+
+<div class="card">
+  <h2>Add Exam Rooms</h2>
+
+  <form action="room" method="post">
+
+    <label>Total Rooms</label>
+    <input name="total_rooms" type="number" placeholder="Enter number of rooms" required>
+
+    <button>Add Rooms</button>
+
+    <p style="margin-top:15px;text-align:center">
+      <a href="index.jsp">⬅ Back to Dashboard</a>
+    </p>
+
+  </form>
+</div>
+
+</body>
+</html>

@@ -2,60 +2,54 @@ package com.examSeatOptimizer.controller;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
+import javax.servlet.*;
 import java.io.IOException;
 import java.sql.*;
-import java.util.*;
 import com.examSeatOptimizer.dao.DBConnection;
 
 @WebServlet("/view")
 public class ViewSeatsServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest req,HttpServletResponse res)
+            throws IOException, ServletException {
+
+        req.getRequestDispatcher("view.html").forward(req,res);
+    }
+
+    protected void doPost(HttpServletRequest req,HttpServletResponse res)
             throws IOException {
 
-        res.setContentType("text/html");
-        StringBuilder html = new StringBuilder();
+        res.setContentType("application/json");
+        StringBuilder json = new StringBuilder("[");
 
-        html.append("<html><head><title>Seating Chart</title></head>");
-        html.append("<body style='background:#0f172a;color:white;font-family:Segoe UI;'>");
-
-        try {
+        try{
             Connection con = DBConnection.getConnection();
+            ResultSet rooms = con.createStatement()
+                    .executeQuery("SELECT id,room_no FROM room");
 
-            PreparedStatement roomPS =
-                    con.prepareStatement("SELECT id,room_no FROM room");
-            ResultSet rooms = roomPS.executeQuery();
-
-            PreparedStatement seatPS =
-                    con.prepareStatement(
-                            "SELECT student.rollno,student.department,allocation.seat_no "+
-                                    "FROM allocation JOIN student ON allocation.student_id=student.id "+
-                                    "WHERE allocation.room_id=? ORDER BY allocation.seat_no");
-
-            while (rooms.next()) {
+            while(rooms.next()){
                 int roomId = rooms.getInt("id");
-                String roomNo = rooms.getString("room_no");
+                json.append("{\"room\":\"").append(rooms.getString("room_no"))
+                        .append("\",\"seats\":[");
 
-                html.append("<h2>🏫 Room : ").append(roomNo).append("</h2>");
-                html.append("<div style='display:grid;grid-template-columns:repeat(6,1fr);gap:10px;'>");
+                ResultSet seats = con.createStatement().executeQuery(
+                        "SELECT student.rollno,student.department FROM allocation "+
+                                "JOIN student ON allocation.student_id=student.id "+
+                                "WHERE allocation.room_id="+roomId+" ORDER BY seat_no");
 
-                seatPS.setInt(1, roomId);
-                ResultSet seats = seatPS.executeQuery();
-
-                while (seats.next()) {
-                    html.append("<div style='padding:10px;border-radius:6px;background:#1e293b;text-align:center;'>");
-                    html.append("<b>").append(seats.getString("rollno")).append("</b><br>");
-                    html.append("<span style='color:#a78bfa;'>").append(seats.getString("department")).append("</span>");
-                    html.append("</div>");
+                while(seats.next()){
+                    json.append("{\"roll\":\"").append(seats.getString(1))
+                            .append("\",\"dept\":\"").append(seats.getString(2))
+                            .append("\"},");
                 }
-                html.append("</div><hr style='margin:30px 0;'>");
+                if(json.charAt(json.length()-1)==',') json.deleteCharAt(json.length()-1);
+                json.append("]},");
             }
+            if(json.charAt(json.length()-1)==',') json.deleteCharAt(json.length()-1);
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        }catch(Exception e){e.printStackTrace();}
 
-        html.append("</body></html>");
-        res.getWriter().print(html.toString());
+        json.append("]");
+        res.getWriter().print(json.toString());
     }
 }
