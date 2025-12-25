@@ -1,81 +1,90 @@
-🎓 EXAM SEAT OPTIMIZER
-College Exam Seating Arrangement System
-╔══════════════════════════════════════════════════════╗
-║                  ADMIN DASHBOARD                    ║
-╠══════════════════════════════════════════════════════╣
-║  👨‍🎓 Student Mgmt   |  🏫 Room Mgmt   |  🧠 Allocate  ║
-║──────────────────────────────────────────────────────║
-║  📄 View Seating   |  🔓 Logout                     ║
-╚══════════════════════════════════════════════════════╝
+Exam Seat Optimizer
 
-📌 Project Overview
+A web-based system to automate college exam seating arrangements using Java Servlets and MySQL.
 
-This project automatically generates conflict-free exam seating arrangements ensuring students from the same branch never sit side-by-side.
+Features
 
-🛠️ Technology Stack
-Layer	Technology
-Frontend	HTML, CSS
-Backend	Java Servlets
-Database	MySQL
-Server	Apache Tomcat
-IDE	IntelliJ IDEA
-🗄️ Database Structure
-STUDENT TABLE
-+----+-------------------+--------+------------+
-| id | name              | rollno | department |
-+----+-------------------+--------+------------+
+Admin login & logout
 
-ROOM TABLE
-+----+---------+----------+
-| id | room_no | capacity |
-+----+---------+----------+
+Add students
 
-ALLOCATION TABLE
-+----+------------+---------+---------+
-| id | student_id | room_id | seat_no |
-+----+------------+---------+---------+
+Add exam rooms with capacity
 
-🔄 System Flow
-Admin Login
-     │
-     ▼
-Add Students ──► Add Rooms
-     │
-     ▼
-Generate Seating Plan
-     │
-     ▼
-View Seating Chart
+Automatic seating allocation
 
-🪑 Seating Algorithm
+Visual seating chart display
 
-Students are grouped by branch and assigned in round-robin order:
+Tech Stack
 
-CSE → IT → ME → CSE → IT → ME
+Frontend: HTML, CSS
 
+Backend: Java Servlets
 
-So no two same-branch students sit together.
+Database: MySQL
 
-🌐 Important URLs
-URL	Function
-/login	Admin Login
-/student	Add Student
-/room	Add Room
-/allocate	Generate Seats
-/view	Seating Chart
+Server: Apache Tomcat
+
+IDE: IntelliJ IDEA
+
+Database Setup
+CREATE DATABASE examseatoptimizer;
+USE examseatoptimizer;
+
+CREATE TABLE student(
+ id INT AUTO_INCREMENT PRIMARY KEY,
+ name VARCHAR(100),
+ rollno VARCHAR(30),
+ department VARCHAR(50)
+);
+
+CREATE TABLE room(
+ id INT AUTO_INCREMENT PRIMARY KEY,
+ room_no VARCHAR(20),
+ capacity INT
+);
+
+CREATE TABLE allocation(
+ id INT AUTO_INCREMENT PRIMARY KEY,
+ student_id INT,
+ room_id INT,
+ seat_no INT
+);
+
+Workflow
+
+Login as admin
+
+Add students
+
+Add rooms
+
+Generate seating plan
+
+View seating chart
+
+Important URLs
+URL	Purpose
+/login	Login
+/student	Add student
+/room	Add room
+/allocate	Generate seats
+/view	View seating
 /logout	Logout
-▶️ How to Run
-1️⃣ Import project in IntelliJ  
-2️⃣ Add MySQL JDBC Connector  
-3️⃣ Configure Tomcat  
-4️⃣ Start Server  
-5️⃣ Open Browser → http://localhost:8080/ExamSeatOptimizer/login
+How to Run
 
-🎯 Objective
+Import project in IntelliJ as a web project
 
-To automate college exam seating with zero conflicts and easy management.
+Add MySQL JDBC connector
 
-👤 Author
+Configure Apache Tomcat
+
+Start server
+
+Open browser:
+
+http://localhost:8080/ExamSeatOptimizer/login
+
+Author
 
 Pratyush Kumar Thakur
 B.Tech – Computer Science & Engineering
